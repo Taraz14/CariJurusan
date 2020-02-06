@@ -18,8 +18,12 @@ import androidx.core.content.ContextCompat;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.Random;
 
 import id.kunya.carijurusan.utils.DatabaseHelper;
+
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 
 /**
  * Created by muhammad on 05/01/2020.
@@ -45,6 +49,9 @@ public class IDQuestionsActivity extends AppCompatActivity {
     private String soal_id, soal, answer_a, answer_b, bobot_a, bobot_b, bobot_list_a, bobot_list_b;
     private float pa1, pa2, pa3, pa4, pa5, pa6, pa7, pa8;
 
+    Random randomQuests;
+    Boolean isAnswer = FALSE;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +65,11 @@ public class IDQuestionsActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        randomQuests = new Random();
+
+//        String randomQuestion = questions[randomQuests.nextInt(15)];
+
+//        showQuestionById(String.valueOf(randomQuests.nextInt(32)));
         showQuestionById(question_id.getText().toString());
         isQuestionAnswered(Integer.parseInt(question_id.getText().toString()));
 
@@ -71,17 +83,22 @@ public class IDQuestionsActivity extends AppCompatActivity {
         next_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                next_id=Integer.parseInt(question_id.getText().toString())+1;
-                if(next_id<=32) {
-                    showQuestionById(String.valueOf(next_id));
-                    isQuestionAnswered(next_id);
-                    question_id.setText("" + next_id);
-                    if(next_id==32) {
-                        next_button.setText("Done");
+                if (isAnswer){
+                    next_id=Integer.parseInt(question_id.getText().toString())+1;
+                    if(next_id<=32) {
+                        isAnswer = FALSE;
+                        showQuestionById(String.valueOf(next_id));
+                        isQuestionAnswered(next_id);
+                        question_id.setText("" + next_id);
+                        if(next_id==32) {
+                            next_button.setText("Done");
+                        }
+                    }else {
+                        finish();
+                        startActivity(new Intent(IDQuestionsActivity.this, ResultActivity.class));
                     }
-                }else {
-                    finish();
-                    startActivity(new Intent(IDQuestionsActivity.this, ResultActivity.class));
+                } else {
+                    Toast.makeText(IDQuestionsActivity.this, "Silahkan pilih jawaban terlebih dahulu", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -122,13 +139,15 @@ public class IDQuestionsActivity extends AppCompatActivity {
 
                 isDataAvailable=myDb.showDataAlternatifByID(Integer.parseInt(question_id.getText().toString()));
 
-                setDataBobotAlternatifAsFloat();
+                setDataBobotAlternatifAsFloat(bobot_a,bobot_a,bobot_b);
 
-                Log.d("MIX", pa1+"\n"+pa2+"\n"+
-                        pa3+"\n"+pa4+"\n"+
-                        pa5+"\n"+pa6+"\n"+
-                        pa7+"\n"+pa8);
+//                Toast.makeText(IDQuestionsActivity.this, String.valueOf(pa1), Toast.LENGTH_SHORT).show();
 
+//                Log.d("MIX", pa1+"\n"+pa2+"\n"+
+//                        pa3+"\n"+pa4+"\n"+
+//                        pa5+"\n"+pa6+"\n"+
+//                        pa7+"\n"+pa8);
+//
                 if (isDataAvailable.getCount()==0) {
                     addAnswer(a1, a2, a3, a4, a5, a6, a7, a8, question_id.getText().toString(), btns_a.getText().toString());
                     addBobotAlternatif(String.valueOf(pa1), String.valueOf(pa2),
@@ -170,7 +189,9 @@ public class IDQuestionsActivity extends AppCompatActivity {
 
                 isDataAvailable=myDb.showDataAlternatifByID(Integer.parseInt(question_id.getText().toString()));
 
-                setDataBobotAlternatifAsFloat();
+                setDataBobotAlternatifAsFloat(bobot_b,bobot_a,bobot_b);
+
+//                Toast.makeText(IDQuestionsActivity.this, String.valueOf(pa1), Toast.LENGTH_SHORT).show();
 
                 if (isDataAvailable.getCount()==0) {
                     addAnswer(a1, a2, a3, a4, a5, a6, a7, a8, question_id.getText().toString(), btns_b.getText().toString());
@@ -215,8 +236,13 @@ public class IDQuestionsActivity extends AppCompatActivity {
         bobot_list_b=splitting_bobot_list[1];
     }
 
-    public void setDataBobotAlternatifAsFloat() {
-        pa1=Float.parseFloat(a1)/Float.parseFloat(a1);
+    public void setDataBobotAlternatifAsFloat(String bobot_jawaban,String bobot_jawaban_a,String bobot_jawaban_b) {
+        if (Integer.parseInt(bobot_jawaban_a)>Integer.parseInt(bobot_jawaban_b)){
+            pa1=Float.parseFloat(bobot_jawaban)/Float.parseFloat(bobot_jawaban_a);
+        } else {
+            pa1=Float.parseFloat(bobot_jawaban)/Float.parseFloat(bobot_jawaban_b);
+        }
+//        pa1=Float.parseFloat(a1)/Float.parseFloat(a1);
         pa2=Float.parseFloat(a2)/Float.parseFloat(a1);
         pa3=Float.parseFloat(a3)/Float.parseFloat(a1);
         pa4=Float.parseFloat(a4)/Float.parseFloat(a1);
@@ -296,6 +322,7 @@ public class IDQuestionsActivity extends AppCompatActivity {
     }
 
     public void setSelectedButton(Button button) {
+        isAnswer = TRUE;
         final int sdk = android.os.Build.VERSION.SDK_INT;
         if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
             button.setTextColor(Color.parseColor("#3D3E59"));
@@ -339,10 +366,12 @@ public class IDQuestionsActivity extends AppCompatActivity {
         answer_a=splitting_answer[0];
         answer_b=splitting_answer[1];
 
-        scrollText.setText(soal_id+". "+soal);
+//        scrollText.setText(soal_id+". "+soal);
+        scrollText.setText(soal);
         btns_a.setText(answer_a);
         btns_b.setText(answer_b);
         soal_title.setText("Soal ke "+id);
+//        soal_title.setText("Soal ke "+id);
     }
 
     public void addAnswer(String a1, String a2, String a3, String a4,
@@ -378,4 +407,8 @@ public class IDQuestionsActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+    }
 }

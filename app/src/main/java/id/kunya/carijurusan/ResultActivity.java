@@ -65,6 +65,7 @@ public class ResultActivity extends AppCompatActivity {
 
         for (int b=0;b<arrDataBobotAlt.length;b++){
             v1 += Float.parseFloat(arrDataMethod[b][6]) * Float.parseFloat(arrDataBobotAlt[b][1]);
+            Log.i("Cari Jurusan", String.valueOf(0) + "  " + String.valueOf(Float.parseFloat(arrDataMethod[b][6]) * Float.parseFloat(arrDataBobotAlt[b][1])));
             v2 += Float.parseFloat(arrDataMethod[b][6]) * Float.parseFloat(arrDataBobotAlt[b][2]);
             v3 += Float.parseFloat(arrDataMethod[b][6]) * Float.parseFloat(arrDataBobotAlt[b][3]);
             v4 += Float.parseFloat(arrDataMethod[b][6]) * Float.parseFloat(arrDataBobotAlt[b][4]);
@@ -81,6 +82,8 @@ public class ResultActivity extends AppCompatActivity {
 
         Arrays.sort(totalListValue);
 
+        result.setText(String.valueOf(v1));
+
         HashMap<Float, String> datas=new HashMap<>();
         datas.put(v1, "Teknik");
         datas.put(v2, "Pertanian");
@@ -91,34 +94,79 @@ public class ResultActivity extends AppCompatActivity {
         datas.put(v7, "Hukum");
         datas.put(v8, "Ekonomi");
 
-        setFilterAsValueFirst(totalListValue[7], datas);
-        setFilterAsValueSecond(totalListValue[6], datas);
-        setFilterAsValueThird(totalListValue[5], datas);
-        setFilterAsValue4th(totalListValue[4], datas);
-        setFilterAsValue5th(totalListValue[3], datas);
-        setFilterAsValue6th(totalListValue[2], datas);
-        setFilterAsValue7th(totalListValue[1], datas);
-        setFilterAsValue8th(totalListValue[0], datas);
+//        setFilterAsValueFirst(totalListValue[7], datas);
+//        setFilterAsValueSecond(totalListValue[6], datas);
+//        setFilterAsValueThird(totalListValue[5], datas);
+//        setFilterAsValue4th(totalListValue[4], datas);
+//        setFilterAsValue5th(totalListValue[3], datas);
+//        setFilterAsValue6th(totalListValue[2], datas);
+//        setFilterAsValue7th(totalListValue[1], datas);
+//        setFilterAsValue8th(totalListValue[0], datas);
 
-        final_result.setText("Berdasarkan perhitungan, Alternatif terbaik adalah : \n\n" +
-                "1. "+firstOption+"\n" +
-                "2. "+secondOption+"\n" +
-                "3. "+thirdOption+"\n" +
-                "4. "+option4th+"\n" +
-                "5. "+option5th+"\n" +
-                "6. "+option6th+"\n" +
-                "7. "+option7th+"\n" +
-                "8. "+option8th); 
+        pilihanJurusan(v1);
+
+        final_result.setText("Selamat,, \n\n" + " Jurusan yang tepat berdasarkan kemampuanmu menjawab pertanyaan ini adalah " +
+                firstOption + "\n\n\n Alternatif jurusan yang lain adalah : \n" + "1. "+secondOption+"\n" +
+                "2. "+thirdOption );
+
+
+
+//        final_result.setText("Berdasarkan perhitungan, Alternatif terbaik adalah : \n\n" +
+//                "1. "+firstOption+"\n" +
+//                "2. "+secondOption+"\n" +
+//                "3. "+thirdOption+"\n" +
+//                "4. "+option4th+"\n" +
+//                "5. "+option5th+"\n" +
+//                "6. "+option6th+"\n" +
+//                "7. "+option7th+"\n" +
+//                "8. "+option8th);
     }
 
-    private void clearAppData() {
-        myDb.truncateMyData();
-        try {
-            myDb.CopyDataBaseFromAsset();
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void pilihanJurusan(float bobot_nilai_user){
+        if (bobot_nilai_user >= 0.81){
+            firstOption = "\"TEKNIK\"";
+            secondOption = "\"FKIP MATEMATIKA\"";
+            thirdOption = "\"PERTANIAN\"";
         }
-        startActivity(new Intent(ResultActivity.this, IDQuestionsActivity.class));
+        else if (bobot_nilai_user >= 0.79){
+            firstOption = "\"FKIP MATEMATIKA\"";
+            secondOption = "\"PERTANIAN\"";
+            thirdOption = "\"PERIKANAN\"";
+        }
+        else if (bobot_nilai_user >= 0.77){
+            firstOption = "\"PERTANIAN\"";
+            secondOption = "\"PERIKANAN\"";
+            thirdOption = "\"BAHASA INGGRIS\"";
+        }
+        else if (bobot_nilai_user >= 0.51){
+            firstOption = "\"PERIKANAN\"";
+            secondOption = "\"BAHASA INGGRIS\"";
+            thirdOption = "\"FISIP\"";
+        }
+        else if (bobot_nilai_user >= 0.47){
+            firstOption = "\"BAHASA INGGRIS\"";
+            secondOption = "\"FISIP\"";
+            thirdOption = "\"EKONOMI\"";
+        }
+        else if (bobot_nilai_user >= 0.45){
+            firstOption = "\"FISIP\"";
+            secondOption = "\"EKONOMI\"";
+            thirdOption =  "\"HUKUM\"";
+        }
+        else if (bobot_nilai_user >= 0.42){
+            firstOption = "\"EKONOMI\"";
+            secondOption = "\"HUKUM\"";
+            thirdOption = "-";
+        }
+        else if (bobot_nilai_user >= 0){
+            firstOption = "\"HUKUM\"";
+            secondOption = "-";
+            thirdOption = "-";
+        }
+        else {
+            firstOption = "Mohon Maaf";
+        }
+
     }
 
     public void setFilterAsValueFirst(float comparison, HashMap<Float, String> datas){
@@ -396,5 +444,20 @@ public class ResultActivity extends AppCompatActivity {
             option8th="" + datas.get(v8);
             info8th="" + comparison;
         }
+    }
+
+    private void clearAppData() {
+        myDb.truncateMyData();
+        try {
+            myDb.CopyDataBaseFromAsset();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        startActivity(new Intent(ResultActivity.this, IDQuestionsActivity.class));
+    }
+
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
     }
 }
