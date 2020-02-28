@@ -180,8 +180,8 @@ public class IDQuestionsActivity extends AppCompatActivity {
                 } else {
                     bobotKriteria = currentQuestion.getWeight_criteria();
                 }
-                Toast.makeText(IDQuestionsActivity.this, String.valueOf(pa1 * Float.parseFloat(bobotKriteria)), Toast.LENGTH_SHORT).show();
-//                Toast.makeText(IDQuestionsActivity.this, bobot_a + "  " + bobotKriteria, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(IDQuestionsActivity.this, String.valueOf(pa1 * Float.parseFloat(bobotKriteria)), Toast.LENGTH_SHORT).show();
+                Toast.makeText(IDQuestionsActivity.this, bobot_a + "  " + bobotKriteria, Toast.LENGTH_SHORT).show();
                 isSelectedA = TRUE;
                 isSelectedB = FALSE;
                 isSelectedC = FALSE;
@@ -205,8 +205,8 @@ public class IDQuestionsActivity extends AppCompatActivity {
                 } else {
                     bobotKriteria = currentQuestion.getWeight_criteria();
                 }
-                Toast.makeText(IDQuestionsActivity.this, String.valueOf(pa1 * Float.parseFloat(bobotKriteria)), Toast.LENGTH_SHORT).show();
-//                Toast.makeText(IDQuestionsActivity.this, bobot_b + "  " + bobotKriteria, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(IDQuestionsActivity.this, String.valueOf(pa1 * Float.parseFloat(bobotKriteria)), Toast.LENGTH_SHORT).show();
+                Toast.makeText(IDQuestionsActivity.this, bobot_b + "  " + bobotKriteria, Toast.LENGTH_SHORT).show();
                 isSelectedA = FALSE;
                 isSelectedC = FALSE;
                 isSelectedB = TRUE;
@@ -230,8 +230,8 @@ public class IDQuestionsActivity extends AppCompatActivity {
                 } else {
                     bobotKriteria = currentQuestion.getWeight_criteria();
                 }
-                Toast.makeText(IDQuestionsActivity.this, String.valueOf(pa1 * Float.parseFloat(bobotKriteria)), Toast.LENGTH_SHORT).show();
-//                Toast.makeText(IDQuestionsActivity.this, bobot_c + "  " + bobotKriteria, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(IDQuestionsActivity.this, String.valueOf(pa1 * Float.parseFloat(bobotKriteria)), Toast.LENGTH_SHORT).show();
+                Toast.makeText(IDQuestionsActivity.this, bobot_c + "  " + bobotKriteria, Toast.LENGTH_SHORT).show();
                 isSelectedA = FALSE;
                 isSelectedB = FALSE;
                 isSelectedB = TRUE;
