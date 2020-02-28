@@ -5,7 +5,7 @@ android {
     buildToolsVersion "29.0.1"
     defaultConfig {
         applicationId "id.kunya.carijurusan"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -27,9 +27,10 @@ dependencies {
     implementation 'com.android.support:design:29.0.1'
     implementation 'com.android.support:cardview-v7:29.0.1'
     implementation 'com.android.support:recyclerview-v7:29.0.1'
+    implementation 'com.balysv:material-ripple:1.0.2'                  // ripple effect
     //AndroidX
     implementation "androidx.cardview:cardview:1.0.0"
-    implementation 'com.github.bumptech.glide:glide:4.7.1'
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

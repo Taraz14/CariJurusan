@@ -18,6 +18,7 @@ import java.io.IOException;
 public class MainActivity extends AppCompatActivity {
 
     private DatabaseHelper myDb;
+    String TAG = "CariJurusan";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        myDb.truncateMyData();
+//        myDb.truncateMyData();
 
         start.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         about.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent jurusan = new Intent(MainActivity.this, InfoJurusan.class);
+                Intent jurusan = new Intent(MainActivity.this, InfoJurusanActivity.class);
                 startActivity(jurusan);
 
             }
