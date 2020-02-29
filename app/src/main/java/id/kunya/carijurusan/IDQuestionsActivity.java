@@ -51,6 +51,7 @@ public class IDQuestionsActivity extends AppCompatActivity {
     private DecimalFormat format=new DecimalFormat("#.##");
 
     private String soal_id, soal, answer_a, answer_b, answer_c, bobot_a, bobot_b, bobot_c;
+    private String x_bobot_a, x_bobot_b, x_bobot_c, x_bobot_kriteria;
     private float pa1;
 
     ArrayList<Float> listBobot = new ArrayList<Float>();
@@ -85,7 +86,7 @@ public class IDQuestionsActivity extends AppCompatActivity {
 //        randomQuests = new Random();
 //        Collections.shuffle(questionList);
         currentQuestion = questionList.get(quid);
-        bobotInitialize();
+//        bobotInitialize();
         setQuestionView();
 
         back.setOnClickListener(new View.OnClickListener() {
@@ -119,7 +120,7 @@ public class IDQuestionsActivity extends AppCompatActivity {
                     if(quid<20){
                         isAnswer = FALSE;
                         currentQuestion = questionList.get(quid);
-                        bobotInitialize();
+//                        bobotInitialize();
                         setQuestionView();
                         if(quid==5 && isReset) {
                             isReset = FALSE;
@@ -144,6 +145,7 @@ public class IDQuestionsActivity extends AppCompatActivity {
                         finish();
                         Intent intent = new Intent(getApplicationContext(),ResultActivity.class);
                         intent.putExtra("bobot",Arrays.toString(listBobot.toArray()));
+                        intent.putExtra("v1","test");
                         startActivity(intent);
                     }
                 } else {
@@ -174,18 +176,18 @@ public class IDQuestionsActivity extends AppCompatActivity {
 
 //                bobotInitialize();
 
-                setDataBobotAlternatifAsFloat(bobot_a,bobot_a,bobot_b,"0");
+                setDataBobotAlternatifAsFloat(x_bobot_a,x_bobot_a,x_bobot_b,"0");
                 if (soal_id.equals("5")){
                     bobotKriteria = "0.04";
                 } else {
                     bobotKriteria = currentQuestion.getWeight_criteria();
                 }
-//                Toast.makeText(IDQuestionsActivity.this, String.valueOf(pa1 * Float.parseFloat(bobotKriteria)), Toast.LENGTH_SHORT).show();
-                Toast.makeText(IDQuestionsActivity.this, bobot_a + "  " + bobotKriteria, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(IDQuestionsActivity.this, String.valueOf(pa1 * Float.parseFloat(x_bobot_kriteria)), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(IDQuestionsActivity.this, x_bobot_a + "  " + x_bobot_kriteria, Toast.LENGTH_SHORT).show();
                 isSelectedA = TRUE;
                 isSelectedB = FALSE;
                 isSelectedC = FALSE;
-                bobotA = pa1 * Float.parseFloat(bobotKriteria);
+                bobotA = pa1 * Float.parseFloat(x_bobot_kriteria);
 //                Toast.makeText(IDQuestionsActivity.this, String.valueOf(bobotA) , Toast.LENGTH_SHORT).show();
             }
         });
@@ -199,18 +201,18 @@ public class IDQuestionsActivity extends AppCompatActivity {
 
 //                bobotInitialize();
 
-                setDataBobotAlternatifAsFloat(bobot_b,bobot_a,bobot_b,"0");
+                setDataBobotAlternatifAsFloat(x_bobot_b,x_bobot_a,x_bobot_b,"0");
                 if (soal_id.equals("5")){
                     bobotKriteria = "0.04";
                 } else {
                     bobotKriteria = currentQuestion.getWeight_criteria();
                 }
-//                Toast.makeText(IDQuestionsActivity.this, String.valueOf(pa1 * Float.parseFloat(bobotKriteria)), Toast.LENGTH_SHORT).show();
-                Toast.makeText(IDQuestionsActivity.this, bobot_b + "  " + bobotKriteria, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(IDQuestionsActivity.this, String.valueOf(pa1 * Float.parseFloat(x_bobot_kriteria)), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(IDQuestionsActivity.this, x_bobot_b + "  " + x_bobot_kriteria, Toast.LENGTH_SHORT).show();
                 isSelectedA = FALSE;
-                isSelectedC = FALSE;
                 isSelectedB = TRUE;
-                bobotB = pa1 * Float.parseFloat(bobotKriteria);
+                isSelectedC = FALSE;
+                bobotB = pa1 * Float.parseFloat(x_bobot_kriteria);
 //                Toast.makeText(IDQuestionsActivity.this, String.valueOf(bobotB) , Toast.LENGTH_SHORT).show();
             }
         });
@@ -224,19 +226,19 @@ public class IDQuestionsActivity extends AppCompatActivity {
 
 //                bobotInitialize();
 
-                setDataBobotAlternatifAsFloat(bobot_c,bobot_a,bobot_b,bobot_c);
+                setDataBobotAlternatifAsFloat(x_bobot_c,x_bobot_a,x_bobot_b,x_bobot_c);
                 if (soal_id.equals("5")){
                     bobotKriteria = "0.04";
                 } else {
                     bobotKriteria = currentQuestion.getWeight_criteria();
                 }
-//                Toast.makeText(IDQuestionsActivity.this, String.valueOf(pa1 * Float.parseFloat(bobotKriteria)), Toast.LENGTH_SHORT).show();
-                Toast.makeText(IDQuestionsActivity.this, bobot_c + "  " + bobotKriteria, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(IDQuestionsActivity.this, String.valueOf(pa1 * Float.parseFloat(x_bobot_kriteria)), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(IDQuestionsActivity.this, x_bobot_c + "  " + x_bobot_kriteria, Toast.LENGTH_SHORT).show();
                 isSelectedA = FALSE;
                 isSelectedB = FALSE;
-                isSelectedB = TRUE;
-                bobotC = pa1 * Float.parseFloat(bobotKriteria);
-                Toast.makeText(IDQuestionsActivity.this, String.valueOf(bobotC) , Toast.LENGTH_SHORT).show();
+                isSelectedC = TRUE;
+                bobotC = pa1 * Float.parseFloat(x_bobot_kriteria);
+//                Toast.makeText(IDQuestionsActivity.this, String.valueOf(bobotC) , Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -252,16 +254,22 @@ public class IDQuestionsActivity extends AppCompatActivity {
         answer_a=splitting_answer[0];
         answer_b=splitting_answer[1];
 
-        scrollText.setText(soal);
+        scrollText.setText(soal + currentQuestion.getWeight_criteria());
         btns_a.setText(answer_a);
         btns_b.setText(answer_b);
-//        soal_title.setText("Soal ke "+  number);
-        soal_title.setText("Soal ke "+ soal_id);
+        soal_title.setText("Soal ke "+  number);
+//        soal_title.setText("Soal ke "+ soal_id);
+
+        String[] splitting_bobot=currentQuestion.getWeight_answer().split("#");
+        x_bobot_a=splitting_bobot[0].trim();
+        x_bobot_b=splitting_bobot[1].trim();
+        x_bobot_kriteria = currentQuestion.getWeight_criteria();
 
         if (currentQuestion.getId().equals("3") || currentQuestion.getId().equals("4") || currentQuestion.getId().equals("5")){
             btns_c.setVisibility(View.VISIBLE);
             answer_c=splitting_answer[2];
             btns_c.setText(answer_c);
+            x_bobot_c=splitting_bobot[2].trim();;
         } else {
             btns_c.setVisibility(View.GONE);
         }

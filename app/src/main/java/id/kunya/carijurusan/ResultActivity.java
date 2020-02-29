@@ -24,7 +24,7 @@ public class ResultActivity extends AppCompatActivity {
     private DatabaseHelper myDb;
     private float v1;
     JSONArray jsonArray = null;
-    String firstOption, secondOption, thirdOption,bobot;
+    String firstOption, secondOption, thirdOption,bobot,resultbobot;
     String TAG = "CariJurusan";
 
 
@@ -39,6 +39,7 @@ public class ResultActivity extends AppCompatActivity {
 
         Bundle extras = ResultActivity.this.getIntent().getExtras();
         bobot = extras.getString("bobot");
+        resultbobot = extras.getString("v1");
 
         try {
             jsonArray = new JSONArray(bobot);
