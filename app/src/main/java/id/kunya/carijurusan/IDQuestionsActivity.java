@@ -254,7 +254,7 @@ public class IDQuestionsActivity extends AppCompatActivity {
         answer_a=splitting_answer[0];
         answer_b=splitting_answer[1];
 
-        scrollText.setText(soal + currentQuestion.getWeight_criteria());
+        scrollText.setText(soal);
         btns_a.setText(answer_a);
         btns_b.setText(answer_b);
         soal_title.setText("Soal ke "+  number);
